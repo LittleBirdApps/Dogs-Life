@@ -1,0 +1,18 @@
+{% extends 'layout.twig' %}
+
+{% block wrapper %}
+    <div id="wrapper">
+        <div class="container">
+            <div id="content">
+                {% block content %}
+                    <div class="row">
+                        <div id="content-main" class="col col-lg-8">
+                            {% block main %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
