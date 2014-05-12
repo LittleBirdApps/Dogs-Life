@@ -1,0 +1,41 @@
+{% extends 'index.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        #egg {
+            width: 60px;
+            height: 80px;
+            background: #FCE94D;
+            border: 5px solid #000;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            -webkit-border-radius: 50%/60% 60% 40% 40%;
+            -moz-border-radius: 50%/60% 60% 40% 40%;
+            border-radius: 50%/60% 60% 40% 40%;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('#egg').mouseover(function() {
+                $('#egg').addClass('shake-slow');
+            });
+            $('#egg').mouseout(function() {
+                $('#egg').removeClass('shake-slow');
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="body">
+        <div id="egg" class="shake"></div>
+    </div>
+{% endblock %}

@@ -9,7 +9,6 @@
 namespace Pet\WebBundle\Controller;
 
 use Silex\Application;
-use Pet\WebBundle\Service\UserService;
 
 /**
  * Class BaseController
@@ -24,8 +23,15 @@ class BaseController
         $this->app = $app;
     }
 
-    protected function getUserService()
+    /**
+     * Renders a template.
+     *
+     * @param string $name    The template name
+     * @param array  $context An array of parameters to pass to the template
+     * @return string The rendered template
+     */
+    public function renderTemplate($name, array $context = [])
     {
-        return new UserService($this->app);
+        return $this->app['twig']->render($name, $context);
     }
 }

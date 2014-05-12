@@ -8,15 +8,11 @@
 
 use Pet\WebBundle\Controller;
 
-$app["controller.user"] = $app->share(function () use ($app) {
-    return new Controller\UserController($app);
+$app["controller.main"] = $app->share(function () use ($app) {
+    return new Controller\MainController($app);
 });
 
 
-// ===== USER =====
+// ===== MAIN =====
 
-$app->put("/register", "controller.user:registerAction");
-
-$app->get('/', function () {
-    return 'Pet - Grow Your Pet';
-});
+$app->match("/", "controller.main:homepageAction")->bind("homepage");
