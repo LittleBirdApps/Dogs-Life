@@ -1,0 +1,113 @@
+{% extends 'index.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        .body {
+            margin: auto;
+            margin-top: 50px;
+            width: 320px;
+            height: 568px;
+            border: 1px solid black;
+        }
+
+        #egg {
+            width: 60px;
+            height: 80px;
+            background: #FCE94D;
+            border: 5px solid #000;
+            position: relative;
+            top: 250px;
+            left: 130px;
+            -webkit-border-radius: 50%/60% 60% 40% 40%;
+            -moz-border-radius: 50%/60% 60% 40% 40%;
+            border-radius: 50%/60% 60% 40% 40%;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('#food').tooltip();
+
+            $('#egg').mouseover(function() {
+                $('#egg').addClass('shake shake-slow');
+                $('#egg').popover('show');
+            });
+            $('#egg').mouseout(function() {
+                $('#egg').removeClass('shake shake-slow shake-hard');
+                $('#egg').popover('hide');
+            });
+
+            $('#egg').click(function() {
+                $('#egg').removeClass('shake-slow');
+                alert('Ouch!');
+                $('#egg').addClass('shake-hard');
+                alert('Grrr!');
+                $('#egg').hide();
+                alert('*POOF!*');
+                setTimeout(function() { alert('GAME OVER') }, 1000);
+            })
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        <div class="row">
+            <div class="col-md-12">
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">Growl! :(</div>
+            <div class="col-md-5 text-right">Burp :)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ status.hunger / status.max_hunger * 100 }}%">
+                        <span class="sr-only">Hunger</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">Eeew! :(</div>
+            <div class="col-md-5 text-right">Smooth :)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{ status.clean / status.max_clean * 100 }}%">
+                        <span class="sr-only">Hunger</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a id="food" href="{{ path("feed") }}" data-toggle="tooltip" data-placement="top" title="Click to feed me!">
+                    <span class="glyphicon glyphicon-cutlery"></span>
+                    <span class="badge">{{ status.food }}</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="egg" data-container="body" data-toggle="popover" data-placement="top" data-title="An Egg" data-content="Isn't it obvious enough that I'm an egg?"></div>
+    </div>
+{% endblock %}

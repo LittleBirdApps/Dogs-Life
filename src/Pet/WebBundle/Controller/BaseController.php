@@ -9,6 +9,8 @@
 namespace Pet\WebBundle\Controller;
 
 use Silex\Application;
+use Pet\WebBundle\Service\PetService;
+use Pet\WebBundle\Service\UserService;
 
 /**
  * Class BaseController
@@ -33,5 +35,38 @@ class BaseController
     public function renderTemplate($name, array $context = [])
     {
         return $this->app['twig']->render($name, $context);
+    }
+
+    /**
+     * Adds a flash message for type.
+     *
+     * @param string $type
+     * @param string $message
+     */
+    protected function setFlash($type, $message)
+    {
+        $this->app['session']->getFlashBag()->add($type, $message);
+    }
+
+    /**
+     * Generates a URL or path for a specific route based on the given parameters.
+     *
+     * @param string $name       The name of the route
+     * @param mixed  $parameters An array of parameters
+     * @return string The generated URL
+     */
+    public function generateUrl($name, $parameters = [])
+    {
+        return $this->app['url_generator']->generate($name, $parameters);
+    }
+
+    protected function getPetService()
+    {
+        return new PetService($this->app);
+    }
+
+    protected function getUserService()
+    {
+        return new UserService($this->app);
     }
 }

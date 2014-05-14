@@ -8,11 +8,13 @@
 
 use Pet\WebBundle\Controller;
 
-$app["controller.main"] = $app->share(function () use ($app) {
-    return new Controller\MainController($app);
+$app["controller.pet"] = $app->share(function () use ($app) {
+    return new Controller\PetController($app);
 });
 
 
 // ===== MAIN =====
 
-$app->match("/", "controller.main:homepageAction")->bind("homepage");
+$app->get("/", "controller.pet:homeAction")->bind("home");
+
+$app->get("/feed", "controller.pet:feedAction")->bind("feed");

@@ -1,0 +1,12 @@
+DROP TABLE `pet`;
+CREATE TABLE `pet` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hunger` int(1) NOT NULL DEFAULT 0,
+  `clean` int(1) NOT NULL DEFAULT 0,
+  `food` int(11) NOT NULL DEFAULT 0,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `pet` VALUES (1, 3, 2, 10, NOW(), NOW());

@@ -16,9 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MainController extends BaseController
 {
-
     public function homepageAction(Request $request)
     {
-        return $this->renderTemplate('Main/homepage.twig');
     }
 }
