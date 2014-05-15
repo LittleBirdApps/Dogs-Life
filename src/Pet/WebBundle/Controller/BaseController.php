@@ -9,6 +9,7 @@
 namespace Pet\WebBundle\Controller;
 
 use Silex\Application;
+use Pet\WebBundle\Service\CheatService;
 use Pet\WebBundle\Service\PetService;
 use Pet\WebBundle\Service\UserService;
 
@@ -58,6 +59,11 @@ class BaseController
     public function generateUrl($name, $parameters = [])
     {
         return $this->app['url_generator']->generate($name, $parameters);
+    }
+
+    protected function getCheatService()
+    {
+        return new CheatService($this->app);
     }
 
     protected function getPetService()

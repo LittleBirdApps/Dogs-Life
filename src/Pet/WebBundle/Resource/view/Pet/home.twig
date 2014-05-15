@@ -12,17 +12,26 @@
             border: 1px solid black;
         }
 
-        #egg {
+        .egg {
+            position: relative;
             width: 60px;
             height: 80px;
             background: #FCE94D;
             border: 5px solid #000;
-            position: relative;
             top: 250px;
             left: 130px;
             -webkit-border-radius: 50%/60% 60% 40% 40%;
             -moz-border-radius: 50%/60% 60% 40% 40%;
             border-radius: 50%/60% 60% 40% 40%;
+        }
+
+        .bird {
+            position: relative;
+            background:url(/images/bird.png);
+            top: 250px;
+            left: 110px;
+            height: 101px;
+            width: 101px;
         }
     </style>
 {% endblock %}
@@ -34,21 +43,21 @@
         $(function() {
             $('#food').tooltip();
 
-            $('#egg').mouseover(function() {
-                $('#egg').addClass('shake shake-slow');
-                $('#egg').popover('show');
+            $('#pet').mouseover(function() {
+                $('#pet').addClass('shake shake-slow');
+                $('#pet').popover('show');
             });
-            $('#egg').mouseout(function() {
-                $('#egg').removeClass('shake shake-slow shake-hard');
-                $('#egg').popover('hide');
+            $('#pet').mouseout(function() {
+                $('#pet').removeClass('shake shake-slow shake-hard');
+                $('#pet').popover('hide');
             });
 
-            $('#egg').click(function() {
-                $('#egg').removeClass('shake-slow');
+            $('#pet').click(function() {
+                $('#pet').removeClass('shake-slow');
                 alert('Ouch!');
-                $('#egg').addClass('shake-hard');
+                $('#pet').addClass('shake-hard');
                 alert('Grrr!');
-                $('#egg').hide();
+                $('#pet').hide();
                 alert('*POOF!*');
                 setTimeout(function() { alert('GAME OVER') }, 1000);
             })
@@ -56,7 +65,7 @@
     </script>
 {% endblock %}
 
-{% block content %}
+{% block main %}
     <div class="body">
         <div class="row">
             <div class="col-md-12">
@@ -78,7 +87,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ status.hunger / status.max_hunger * 100 }}%">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ pet.hunger / status.max_hunger * 100 }}%">
                         <span class="sr-only">Hunger</span>
                     </div>
                 </div>
@@ -92,7 +101,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{ status.clean / status.max_clean * 100 }}%">
+                    <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{ pet.clean / status.max_clean * 100 }}%">
                         <span class="sr-only">Hunger</span>
                     </div>
                 </div>
@@ -103,11 +112,11 @@
             <div class="col-md-12">
                 <a id="food" href="{{ path("feed") }}" data-toggle="tooltip" data-placement="top" title="Click to feed me!">
                     <span class="glyphicon glyphicon-cutlery"></span>
-                    <span class="badge">{{ status.food }}</span>
+                    <span class="badge">{{ pet.food }}</span>
                 </a>
             </div>
         </div>
 
-        <div id="egg" data-container="body" data-toggle="popover" data-placement="top" data-title="An Egg" data-content="Isn't it obvious enough that I'm an egg?"></div>
+        <div id="pet" class="{{ pet.name|lower }}" data-container="body" data-toggle="popover" data-placement="top" data-title="{{ pet.name }}" data-content="{{ pet.description }}"></div>
     </div>
 {% endblock %}

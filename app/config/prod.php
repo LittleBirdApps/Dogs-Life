@@ -8,6 +8,7 @@
 
 $app['config'] = [
     'environment'   => 'prod',
+    'feature_cheat' => FALSE
 ];
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), [

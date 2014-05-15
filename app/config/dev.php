@@ -10,6 +10,7 @@ $app['debug'] = true;
 
 $app['config'] = [
     'environment'   => 'dev',
+    'feature_cheat' => TRUE
 ];
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), [

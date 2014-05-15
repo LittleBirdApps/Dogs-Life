@@ -1,0 +1,10 @@
+{% if app.config.feature_cheat %}
+    Game Time: <b>{{ game_time|date("Y-m-d H:i:s") }}</b>
+    <hr />
+    <h4 id="cheat"><b>CHEAT:</b></h4>
+    <div><a href="/cheat/time/1">Add 1 Hour</a></div>
+    <div><a href="/cheat/time/3">Add 3 Hours</a></div>
+    <div><a href="/cheat/time/6">Add 6 Hours</a></div>
+    <div><a href="/cheat/time/12">Add 12 Hours</a></div>
+    <div><a href="/cheat/time/24">Add 24 Hours</a></div>
+{% endif %}

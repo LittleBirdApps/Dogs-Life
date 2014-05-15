@@ -41,7 +41,9 @@ class PetService extends BaseService
         return $this->getDB()->createQueryBuilder()
             ->select('*')
             ->from('pet', 'p')
-            ->where('id = :pet_id')
+            ->from('type', 't')
+            ->where('p.id = :pet_id')
+            ->andWhere('p.type_id = t.id')
             ->setParameter('pet_id', $petId)
             ->execute()
             ->fetch();
