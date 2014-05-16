@@ -87,8 +87,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ pet.hunger / status.max_hunger * 100 }}%">
-                        <span class="sr-only">Hunger</span>
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ pet.full / status.max_full * 100 }}%">
+                        <span class="sr-only">Full</span>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
             <div class="col-md-12">
                 <div class="progress">
                     <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{ pet.clean / status.max_clean * 100 }}%">
-                        <span class="sr-only">Hunger</span>
+                        <span class="sr-only">Full</span>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,7 @@ class PetController extends BaseController
         $petId = Constants::CONFIG_INITIAL_PET_ID;
         $pet = $this->getPetService()->getPet($petId);
 
-        $status['max_hunger'] = Constants::CONFIG_MAX_HUNGER;
+        $status['max_full'] = Constants::CONFIG_MAX_FULL;
         $status['max_clean'] = Constants::CONFIG_MAX_CLEAN;
 
         return $this->renderTemplate('Pet/home.twig', ['pet' => $pet, 'status' => $status]);
@@ -38,7 +38,7 @@ class PetController extends BaseController
         } else if ($pet['food'] <= 0) {
             $code = Constants::FLASH_FAILED;
             $message = "You don't have enough food :(";
-        } else if ($pet['hunger'] >= Constants::CONFIG_MAX_HUNGER) {
+        } else if ($pet['full'] >= Constants::CONFIG_MAX_FULL) {
             $code = Constants::FLASH_FAILED;
             $message = "Burp! I'm full! :|";
         } else {

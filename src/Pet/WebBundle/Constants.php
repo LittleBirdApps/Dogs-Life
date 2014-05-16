@@ -20,5 +20,5 @@ class Constants {
     const CONFIG_INITIAL_PET_ID = 1;
 
     const CONFIG_MAX_CLEAN = 5;
-    const CONFIG_MAX_HUNGER = 5;
+    const CONFIG_MAX_FULL = 5;
 }

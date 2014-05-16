@@ -10,7 +10,7 @@ DROP TABLE `pet`;
 CREATE TABLE `pet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type_id` int(1) NOT NULL,
-  `hunger` int(1) NOT NULL DEFAULT 0,
+  `full` int(1) NOT NULL DEFAULT 0,
   `clean` int(1) NOT NULL DEFAULT 0,
   `food` int(11) NOT NULL DEFAULT 0,
   `last_feed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

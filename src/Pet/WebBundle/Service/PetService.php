@@ -58,6 +58,24 @@ class PetService extends BaseService
     public function feedPet($petId)
     {
         $pet = $this->getPet($petId);
-        $this->getDB()->update('pet', ['food' => $pet['food'] -1, 'hunger' => $pet['hunger'] + 1], ['id' => $petId]);
+        $this->getDB()->update('pet', ['food' => $pet['food'] -1, 'full' => $pet['full'] + 1], ['id' => $petId]);
+    }
+
+    /**
+     * Add food
+     *
+     * @param int $petId
+     * @param int $amount
+     * @return int
+     */
+    public function addFood($petId, $amount)
+    {
+        $pet = $this->getPet($petId);
+        if ($pet['food'] + $amount < 0) {
+            $amount = 0;
+        } else {
+            $amount += $pet['food'];
+        }
+        $this->getDB()->update('pet', ['food' => $amount], ['id' => $petId]);
     }
 }
