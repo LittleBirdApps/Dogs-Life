@@ -4,6 +4,9 @@
     {{ parent() }}
 
     <style type="text/css">
+        html, body {
+            font-family: "Noto Sans", "Trebuchet MS", "Arial";
+        }
         .body {
             margin: auto;
             margin-top: 50px;
@@ -44,23 +47,10 @@
             $('#food, #bath').tooltip();
 
             $('#pet').mouseover(function() {
-                $('#pet').addClass('shake shake-slow');
-                $('#pet').popover('show');
+                $('#pet').popover('show').addClass('shake shake-slow');
+            }).mouseout(function() {
+                $('#pet').popover('hide').removeClass('shake shake-slow shake-hard');
             });
-            $('#pet').mouseout(function() {
-                $('#pet').removeClass('shake shake-slow shake-hard');
-                $('#pet').popover('hide');
-            });
-
-            $('#pet').click(function() {
-                $('#pet').removeClass('shake-slow');
-                alert('Ouch!');
-                $('#pet').addClass('shake-hard');
-                alert('Grrr!');
-                $('#pet').hide();
-                alert('*POOF!*');
-                setTimeout(function() { alert('GAME OVER') }, 1000);
-            })
         });
     </script>
 {% endblock %}

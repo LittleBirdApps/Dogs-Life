@@ -100,4 +100,14 @@ class CheatController extends BaseController
 
         return $this->app->redirect($this->generateUrl('home'));
     }
+
+    public function typeAction($type)
+    {
+        if ($this->app['config']['feature_cheat']) {
+            $petId = Constants::CONFIG_INITIAL_PET_ID;
+            $this->getCheatService()->evolve($petId, $type);
+        }
+
+        return $this->app->redirect($this->generateUrl('home'));
+    }
 }

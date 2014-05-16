@@ -117,4 +117,15 @@ class CheatService extends BaseService
         }
         $this->getDB()->update('pet', ['clean' => $amount], ['id' => $petId]);
     }
+
+    /**
+     * Zero clean
+     *
+     * @param $petId
+     * @param $type
+     */
+    public function evolve($petId, $type)
+    {
+        $this->getDB()->update('pet', ['type_id' => $type], ['id' => $petId]);
+    }
 }
