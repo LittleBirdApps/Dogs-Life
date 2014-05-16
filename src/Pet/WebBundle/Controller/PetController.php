@@ -25,6 +25,24 @@ class PetController extends BaseController
         $status['max_full'] = Constants::CONFIG_MAX_FULL;
         $status['max_clean'] = Constants::CONFIG_MAX_CLEAN;
 
+        if ($pet['full'] == Constants::CONFIG_MAX_FULL && $pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
+            $status['message'] = "Thank you for taking a good care of me :)";
+        } else if ($pet['full'] <= 1) {
+            $status['message'] = "I'm hungry, let's eat :(";
+        } else if ($pet['clean'] <= 1) {
+            $status['message'] = "I feel itchy, let's take a bath :(";
+        } else if ($pet['full'] <= 3) {
+            $status['message'] = "I can have some food :|";
+        } else if ($pet['clean'] <= 3) {
+            $status['message'] = "It's good to clean ourselves up :|";
+        } else if ($pet['full'] == Constants::CONFIG_MAX_FULL) {
+            $status['message'] = "Thank you for making sure that I'm well fed :)";
+        } else if ($pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
+            $status['message'] = "Thank you for making sure that I'm clean :)";
+        } else { // full & clean = 4
+            $status['message'] = "Life is beautiful!";
+        }
+
         return $this->renderTemplate('Pet/home.twig', ['pet' => $pet, 'status' => $status]);
     }
 
@@ -45,6 +63,26 @@ class PetController extends BaseController
             $this->getPetService()->feedPet($petId);
             $code = Constants::FLASH_SUCCESS;
             $message = "Nom... Nom... Nice! Thanks! :)";
+        }
+
+        $this->setFlash($code, $message);
+        return $this->app->redirect($this->generateUrl('home'));
+    }
+
+    public function batheAction()
+    {
+        $petId = Constants::CONFIG_INITIAL_PET_ID;
+        $pet = $this->getPetService()->getPet($petId);
+        if (empty($pet)) {
+            $code = Constants::FLASH_ERROR;
+            $message = "Pet is not found!!!";
+        } else if ($pet['clean'] >= Constants::CONFIG_MAX_CLEAN) {
+            $code = Constants::FLASH_FAILED;
+            $message = "I'm already clean! :|";
+        } else {
+            $this->getPetService()->bathePet($petId);
+            $code = Constants::FLASH_SUCCESS;
+            $message = "Thanks! I'm as smooth as silk! :)";
         }
 
         $this->setFlash($code, $message);

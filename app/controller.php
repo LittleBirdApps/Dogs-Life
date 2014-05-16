@@ -30,3 +30,5 @@ $app->get("/cheat/clean/zero", "controller.cheat:zeroCleanAction")->bind("cheat_
 $app->get("/", "controller.pet:homeAction")->bind("home");
 
 $app->get("/feed", "controller.pet:feedAction")->bind("feed");
+
+$app->get("/bathe", "controller.pet:batheAction")->bind("bathe");

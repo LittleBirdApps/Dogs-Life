@@ -62,6 +62,17 @@ class PetService extends BaseService
     }
 
     /**
+     * Bathe pet by id
+     *
+     * @param int $petId
+     * @return int
+     */
+    public function bathePet($petId)
+    {
+        $this->getDB()->update('pet', ['clean' => Constants::CONFIG_MAX_CLEAN], ['id' => $petId]);
+    }
+
+    /**
      * Add food
      *
      * @param int $petId

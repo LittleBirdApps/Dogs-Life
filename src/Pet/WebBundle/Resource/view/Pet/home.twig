@@ -18,7 +18,7 @@
             height: 80px;
             background: #FCE94D;
             border: 5px solid #000;
-            top: 250px;
+            top: 220px;
             left: 130px;
             -webkit-border-radius: 50%/60% 60% 40% 40%;
             -moz-border-radius: 50%/60% 60% 40% 40%;
@@ -28,7 +28,7 @@
         .bird {
             position: relative;
             background:url(/images/bird.png);
-            top: 250px;
+            top: 220px;
             left: 110px;
             height: 101px;
             width: 101px;
@@ -41,7 +41,7 @@
 
     <script type="text/javascript">
         $(function() {
-            $('#food').tooltip();
+            $('#food, #bath').tooltip();
 
             $('#pet').mouseover(function() {
                 $('#pet').addClass('shake shake-slow');
@@ -109,14 +109,19 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
                 <a id="food" href="{{ path("feed") }}" data-toggle="tooltip" data-placement="top" title="Click to feed me!">
                     <span class="glyphicon glyphicon-cutlery"></span>
                     <span class="badge">{{ pet.food }}</span>
                 </a>
             </div>
+            <div class="col-md-9">
+                <a id="bath" href="{{ path("bathe") }}" data-toggle="tooltip" data-placement="top" title="Click to bathe me!">
+                    <span class="glyphicon glyphicon-tint"></span>
+                </a>
+            </div>
         </div>
 
-        <div id="pet" class="{{ pet.name|lower }}" data-container="body" data-toggle="popover" data-placement="top" data-title="{{ pet.name }}" data-content="{{ pet.description }}"></div>
+        <div id="pet" class="{{ pet.name|lower }}" data-container="body" data-toggle="popover" data-placement="top" data-title="{{ pet.name }}" data-content="{{ status.message }}"></div>
     </div>
 {% endblock %}
