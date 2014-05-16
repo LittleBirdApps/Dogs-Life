@@ -26,7 +26,7 @@ class PetController extends BaseController
         $status['max_clean'] = Constants::CONFIG_MAX_CLEAN;
 
         if ($pet['full'] == Constants::CONFIG_MAX_FULL && $pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
-            $status['message'] = "Thank you for taking a good care of me :)";
+            $status['message'] = "Thank you for taking a good care of me!";
         } else if ($pet['full'] <= 1) {
             $status['message'] = "I'm hungry, let's eat :(";
         } else if ($pet['clean'] <= 1) {
@@ -36,11 +36,15 @@ class PetController extends BaseController
         } else if ($pet['clean'] <= 3) {
             $status['message'] = "It's good to clean ourselves up :|";
         } else if ($pet['full'] == Constants::CONFIG_MAX_FULL) {
-            $status['message'] = "Thank you for making sure that I'm well fed :)";
+            $status['message'] = "Thank you for feeding me well :)";
         } else if ($pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
-            $status['message'] = "Thank you for making sure that I'm clean :)";
+            $status['message'] = "Thank you for cleaning me well :)";
         } else { // full & clean = 4
             $status['message'] = "Life is beautiful!";
+        }
+
+        if (empty($this->app['session']->getFlashBag()->peekAll())) {
+            $this->setFlash('info', $status['message']);
         }
 
         return $this->renderTemplate('Pet/home.twig', ['pet' => $pet, 'status' => $status]);

@@ -3,21 +3,19 @@
 {% block wrapper %}
     <div id="wrapper">
         <div class="container">
-            <div id="content">
-                {% block content %}
-                    <div class="row">
-                        <div class="col-md-3">
-                            {% block sidebar %}
-                                {{ render(url('component_sidebar')) }}
-                            {% endblock %}
-                        </div>
-                        <div class="col-md-6">
-                            {% block main %}
-                            {% endblock %}
-                        </div>
+            {% block content %}
+                <div class="row">
+                    <div class="col-md-3">
+                        {% block sidebar %}
+                            {{ render(url('component_sidebar')) }}
+                        {% endblock %}
                     </div>
-                {% endblock %}
-            </div>
+                    <div class="col-md-6">
+                        {% block main %}
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
         </div>
     </div>
 {% endblock %}
