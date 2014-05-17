@@ -1,32 +1,74 @@
 html, body {
     font-family: "Noto Sans", "Trebuchet MS", "Arial";
 }
+body {
+    padding-top: 50px;
+}
 .body {
     margin: auto;
-    margin-top: 50px;
     width: 320px;
     height: 568px;
     border: 1px solid black;
+    padding: 10px;
 }
-
+#bird-nest {
+    float: left;
+    position: relative;
+    top: 200px;
+    left: 5px;
+    height: 78px;
+    overflow: hidden;
+    z-index: 1;
+}
+#bird-nest-bottom {
+    float: left;
+    position: relative;
+    top: 200px;
+    left: 5px;
+    height: 75px;
+    overflow: hidden;
+    z-index: 3;
+}
+#bird-nest-bottom img {
+    margin-top: -77px;
+}
 .egg {
     position: relative;
     width: 60px;
     height: 80px;
     background: #FCE94D;
     border: 5px solid #000;
-    top: 220px;
-    left: 130px;
+    top: 50px; /* 140px */
+    left: 125px;
     -webkit-border-radius: 50%/60% 60% 40% 40%;
     -moz-border-radius: 50%/60% 60% 40% 40%;
     border-radius: 50%/60% 60% 40% 40%;
+    z-index: 2;
 }
 
 .bird {
     position: relative;
     background:url(/images/bird.png);
-    top: 220px;
-    left: 110px;
+    top: 30px; /* 120px */
+    left: 105px;
     height: 101px;
     width: 101px;
+    z-index: 2;
+}
+
+/* OVERWRITE */
+.progress span:nth-child(1) {
+    position: absolute;
+    color: black;
+    margin-left: 10px;
+}
+.progress span:nth-child(2) {
+    position: absolute;
+    color: black;
+}
+#progress-full span:nth-child(2){
+    margin-left: 243px;
+}
+#progress-clean span:nth-child(2){
+    margin-left: 225px;
 }

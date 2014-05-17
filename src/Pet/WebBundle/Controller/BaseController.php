@@ -12,6 +12,7 @@ use Silex\Application;
 use Pet\WebBundle\Service\CheatService;
 use Pet\WebBundle\Service\PetService;
 use Pet\WebBundle\Service\UserService;
+use Pet\WebBundle\Service\UtilityService;
 
 /**
  * Class BaseController
@@ -74,5 +75,10 @@ class BaseController
     protected function getUserService()
     {
         return new UserService($this->app);
+    }
+
+    protected function getUtilityService()
+    {
+        return new UtilityService($this->app);
     }
 }

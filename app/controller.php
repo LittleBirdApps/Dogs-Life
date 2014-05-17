@@ -26,6 +26,9 @@ $app->get("/cheat/full/{amount}", "controller.cheat:fullAction")->assert('amount
 $app->get("/cheat/full/zero", "controller.cheat:zeroFullAction")->bind("cheat_zero_full");
 $app->get("/cheat/clean/{amount}", "controller.cheat:cleanAction")->assert('amount', '\d+')->bind("cheat_clean");
 $app->get("/cheat/clean/zero", "controller.cheat:zeroCleanAction")->bind("cheat_zero_clean");
+$app->get("/cheat/star/{amount}", "controller.cheat:starAction")->assert('amount', '\d+')->bind("cheat_star");
+$app->get("/cheat/star/zero", "controller.cheat:zeroStarAction")->bind("cheat_zero_star");
+
 $app->get("/cheat/type/{type}", "controller.cheat:typeAction")->assert('type', '\d+')->bind("cheat_type");
 
 $app->get("/", "controller.pet:homeAction")->bind("home");
@@ -33,3 +36,5 @@ $app->get("/", "controller.pet:homeAction")->bind("home");
 $app->get("/feed", "controller.pet:feedAction")->bind("feed");
 
 $app->get("/bathe", "controller.pet:batheAction")->bind("bathe");
+
+$app->get("/star", "controller.pet:starAction")->bind("star");

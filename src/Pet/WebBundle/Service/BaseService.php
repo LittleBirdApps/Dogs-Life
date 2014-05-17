@@ -44,6 +44,14 @@ class BaseService
     }
 
     /**
+     * @return CheatService
+     */
+    protected function getCheatService()
+    {
+        return new CheatService($this->app);
+    }
+
+    /**
      * @return PetService
      */
     protected function getPetService()
@@ -57,5 +65,13 @@ class BaseService
     protected function getUserService()
     {
         return new UserService($this->app);
+    }
+
+    /**
+     * @return UtilityService
+     */
+    protected function getUtilityService()
+    {
+        return new UtilityService($this->app);
     }
 }

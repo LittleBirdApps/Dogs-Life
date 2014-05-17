@@ -19,7 +19,7 @@ class CheatService extends BaseService
     /**
      * Get game time
      *
-     * @return array
+     * @return int
      */
     public function getGameTime()
     {
@@ -47,7 +47,9 @@ class CheatService extends BaseService
      */
     public function resetTime()
     {
+        $gameTime = $this->getUtilityService()->getGameTime();
         $this->getDB()->executeQuery('TRUNCATE cheat');
+        $this->getDB()->update('pet', ['last_feed' => $gameTime, 'last_bathe' => $gameTime, 'last_online' => $gameTime], ['1' => '1']);
     }
 
     /**
@@ -57,7 +59,7 @@ class CheatService extends BaseService
      */
     public function zeroFood($petId)
     {
-        $this->getDB()->update('pet', ['food' => 0], ['id' => $petId]);
+        $this->getPetService()->savePet($petId, ['food' => 0]);
     }
 
     /**
@@ -67,7 +69,7 @@ class CheatService extends BaseService
      */
     public function zeroFull($petId)
     {
-        $this->getDB()->update('pet', ['full' => 0], ['id' => $petId]);
+        $this->getPetService()->savePet($petId, ['full' => 0]);
     }
 
     /**
@@ -86,7 +88,7 @@ class CheatService extends BaseService
         } else {
             $amount += $pet['full'];
         }
-        $this->getDB()->update('pet', ['full' => $amount], ['id' => $petId]);
+        $this->getPetService()->savePet($petId, ['full' => $amount]);
     }
 
     /**
@@ -96,7 +98,7 @@ class CheatService extends BaseService
      */
     public function zeroClean($petId)
     {
-        $this->getDB()->update('pet', ['clean' => 0], ['id' => $petId]);
+        $this->getPetService()->savePet($petId, ['clean' => 0]);
     }
 
     /**
@@ -115,7 +117,34 @@ class CheatService extends BaseService
         } else {
             $amount += $pet['clean'];
         }
-        $this->getDB()->update('pet', ['clean' => $amount], ['id' => $petId]);
+        $this->getPetService()->savePet($petId, ['clean' => $amount]);
+    }
+
+    /**
+     * Zero star
+     *
+     * @param $petId
+     */
+    public function zeroStar($petId)
+    {
+        $this->getPetService()->savePet($petId, ['star' => 0]);
+    }
+
+    /**
+     * Add star
+     *
+     * @param $petId
+     * @param $amount
+     */
+    public function addStar($petId, $amount)
+    {
+        $pet = $this->getPetService()->getPet($petId);
+        if ($pet['star'] + $amount < 0) {
+            $amount = 0;
+        } else {
+            $amount += $pet['star'];
+        }
+        $this->getPetService()->savePet($petId, ['star' => $amount], ['id' => $petId]);
     }
 
     /**
@@ -126,6 +155,6 @@ class CheatService extends BaseService
      */
     public function evolve($petId, $type)
     {
-        $this->getDB()->update('pet', ['type_id' => $type], ['id' => $petId]);
+        $this->getPetService()->savePet($petId, ['type_id' => $type]);
     }
 }

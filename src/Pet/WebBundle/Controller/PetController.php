@@ -20,13 +20,17 @@ class PetController extends BaseController
     public function homeAction()
     {
         $petId = Constants::CONFIG_INITIAL_PET_ID;
+        $this->getPetService()->checkPet($petId);
+
         $pet = $this->getPetService()->getPet($petId);
 
         $status['max_full'] = Constants::CONFIG_MAX_FULL;
         $status['max_clean'] = Constants::CONFIG_MAX_CLEAN;
 
-        if ($pet['full'] == Constants::CONFIG_MAX_FULL && $pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
-            $status['message'] = "Thank you for taking a good care of me!";
+        if ($pet['sick'] == Constants::CONFIG_SICK_YES) {
+            $status['message'] = "I'm sick :(";
+        } else if ($pet['full'] == Constants::CONFIG_MAX_FULL && $pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
+            $status['message'] = "I'm in perfect condition! Thanks!";
         } else if ($pet['full'] <= 1) {
             $status['message'] = "I'm hungry, let's eat :(";
         } else if ($pet['clean'] <= 1) {
@@ -44,7 +48,8 @@ class PetController extends BaseController
         }
 
         if (empty($this->app['session']->getFlashBag()->peekAll())) {
-            $this->setFlash('info', $status['message']);
+            $messageType = $pet['sick'] == Constants::CONFIG_SICK_YES ? 'danger' : 'info';
+            $this->setFlash($messageType, $status['message']);
         }
 
         return $this->renderTemplate('Pet/home.twig', ['pet' => $pet, 'status' => $status]);
@@ -62,7 +67,7 @@ class PetController extends BaseController
             $message = "You don't have enough food :(";
         } else if ($pet['full'] >= Constants::CONFIG_MAX_FULL) {
             $code = Constants::FLASH_FAILED;
-            $message = "Burp! I'm full! :|";
+            $message = "(Burp) I'm full :|";
         } else {
             $this->getPetService()->feedPet($petId);
             $code = Constants::FLASH_SUCCESS;
@@ -82,11 +87,34 @@ class PetController extends BaseController
             $message = "Pet is not found!!!";
         } else if ($pet['clean'] >= Constants::CONFIG_MAX_CLEAN) {
             $code = Constants::FLASH_FAILED;
-            $message = "I'm already clean! :|";
+            $message = "I'm already clean :|";
         } else {
             $this->getPetService()->bathePet($petId);
             $code = Constants::FLASH_SUCCESS;
             $message = "Thanks! I'm as smooth as silk! :)";
+        }
+
+        $this->setFlash($code, $message);
+        return $this->app->redirect($this->generateUrl('home'));
+    }
+
+    public function starAction()
+    {
+        $petId = Constants::CONFIG_INITIAL_PET_ID;
+        $pet = $this->getPetService()->getPet($petId);
+        if (empty($pet)) {
+            $code = Constants::FLASH_ERROR;
+            $message = "Pet is not found!!!";
+        } else if ($pet['star'] <= 0) {
+            $code = Constants::FLASH_FAILED;
+            $message = "You don't have a star :|";
+        } else if ($pet['sick'] == Constants::CONFIG_SICK_NO) {
+            $code = Constants::FLASH_FAILED;
+            $message = "I'm not sick :|";
+        } else {
+            $this->getPetService()->curePet($petId);
+            $code = Constants::FLASH_SUCCESS;
+            $message = "Thanks! I'm healthy again! :)";
         }
 
         $this->setFlash($code, $message);

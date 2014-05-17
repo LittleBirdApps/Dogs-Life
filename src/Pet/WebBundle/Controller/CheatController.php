@@ -20,7 +20,7 @@ class CheatController extends BaseController
 
     public function componentSidebarAction()
     {
-        return $this->renderTemplate('Component/sidebar.twig', ['game_time' => $this->getCheatService()->getGameTime()]);
+        return $this->renderTemplate('Component/sidebar.twig', ['game_time' => $this->getUtilityService()->getGameTime()]);
     }
 
     public function resetTimeAction()
@@ -96,6 +96,26 @@ class CheatController extends BaseController
         if ($this->app['config']['feature_cheat']) {
             $petId = Constants::CONFIG_INITIAL_PET_ID;
             $this->getCheatService()->addClean($petId, $amount);
+        }
+
+        return $this->app->redirect($this->generateUrl('home'));
+    }
+
+    public function zeroStarAction()
+    {
+        if ($this->app['config']['feature_cheat']) {
+            $petId = Constants::CONFIG_INITIAL_PET_ID;
+            $this->getCheatService()->zeroStar($petId);
+        }
+
+        return $this->app->redirect($this->generateUrl('home'));
+    }
+
+    public function starAction($amount)
+    {
+        if ($this->app['config']['feature_cheat']) {
+            $petId = Constants::CONFIG_INITIAL_PET_ID;
+            $this->getCheatService()->addStar($petId, $amount);
         }
 
         return $this->app->redirect($this->generateUrl('home'));
