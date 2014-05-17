@@ -40,7 +40,8 @@ h3 {
     position: relative;
     width: 60px;
     height: 80px;
-    background: #FCE94D;
+    /*background: #B6F0E6;*/
+    background: #FAAA41;
     border: 5px solid #000;
     top: 50px; /* 140px */
     left: 125px;
@@ -52,12 +53,51 @@ h3 {
 
 .bird {
     position: relative;
-    background:url(/images/bird.png);
-    top: 30px; /* 120px */
-    left: 105px;
-    height: 101px;
-    width: 101px;
+    top: 20px; /* 120px */
+    left: 85px;
+    height: 110px;
+    width: 140px;
+    overflow: hidden;
     z-index: 2;
+}
+.bird img {
+    content:url("/images/owl.png");
+}
+.bird.superb img {
+    margin-top: -112px;
+    margin-left: -437px;
+}
+.bird.happy img {
+    margin-top: -113px;
+    margin-left: -2px;
+}
+.bird.normal img {
+    margin-top: -112px;
+    margin-left: -147px;
+}
+.bird.itchy img {
+    margin-top: -114px;
+    margin-left: -290px;
+}
+.bird.hungry img {
+    margin-top: 0px;
+    margin-left: 0px;
+}
+.bird.angry img {
+    margin-top: 0px;
+    margin-left: -434px;
+}
+.bird.sick img {
+    margin-top: -233px;
+    margin-left: -440px;
+}
+.bird.sleepy img {
+    margin-top: -1px;
+    margin-left: -146px;
+}
+.bird.sleep img {
+    margin-top: -236px;
+    margin-left: -4px;
 }
 
 /* OVERWRITE */

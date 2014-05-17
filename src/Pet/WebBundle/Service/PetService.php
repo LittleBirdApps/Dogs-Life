@@ -82,8 +82,8 @@ class PetService extends BaseService
     {
         $pet = $this->getPet($petId);
         $data = ['star' => $pet['star'] - 1, 'sick' => 0];
-        if ($pet['full'] < 2) {
-            $data['full'] = 2;
+        if ($pet['full'] < 1) {
+            $data['full'] = 1;
         }
         $this->savePet($petId, $data);
     }
@@ -128,31 +128,45 @@ class PetService extends BaseService
         $gameTime = $this->getUtilityService()->getGameTime(Constants::CONFIG_GAME_TIME_TYPE_INT);
 
         $data = array();
-        if (strtotime($pet['last_feed']) + Constants::CONFIG_TIME_FEED <= $gameTime) {
-            $reduceFull = floor(($gameTime - strtotime($pet['last_feed'])) / Constants::CONFIG_TIME_FEED);
-            $data['full'] = $pet['full'] - $reduceFull >= 0 ? $pet['full'] - $reduceFull : 0;
-            $data['last_feed'] = date("Y-m-d H:i:s", strtotime($pet['last_feed']) + $reduceFull * Constants::CONFIG_TIME_FEED);
+        if ($pet['type_id'] != Constants::CONFIG_PET_TYPE_EGG) {
+            if (strtotime($pet['last_feed']) + Constants::CONFIG_TIME_FEED <= $gameTime) {
+                $reduceFull = floor(($gameTime - strtotime($pet['last_feed'])) / Constants::CONFIG_TIME_FEED);
+                $data['full'] = $pet['full'] - $reduceFull >= 0 ? $pet['full'] - $reduceFull : 0;
+                if ($pet['full'] - $reduceFull < 0) {
+                    $data['sick'] = 1;
+                }
+                $data['last_feed'] = date("Y-m-d H:i:s", strtotime($pet['last_feed']) + $reduceFull * Constants::CONFIG_TIME_FEED);
+            }
+            if (strtotime($pet['last_bathe']) + Constants::CONFIG_TIME_BATHE <= $gameTime) {
+                $reduceClean = floor(($gameTime - strtotime($pet['last_bathe'])) / Constants::CONFIG_TIME_BATHE);
+                $data['clean'] = $pet['clean'] - $reduceClean >= 0 ? $pet['clean'] - $reduceClean : 0;
+                $data['last_bathe'] = date("Y-m-d H:i:s", strtotime($pet['last_bathe']) + $reduceClean * Constants::CONFIG_TIME_BATHE);
+            }
         }
-        if (strtotime($pet['last_bathe']) + Constants::CONFIG_TIME_BATHE <= $gameTime) {
-            $reduceClean = floor(($gameTime - strtotime($pet['last_bathe'])) / Constants::CONFIG_TIME_BATHE);
-            $data['clean'] = $pet['clean'] - $reduceClean >= 0 ? $pet['clean'] - $reduceClean : 0;
-            $data['last_bathe'] = date("Y-m-d H:i:s", strtotime($pet['last_bathe']) + $reduceClean * Constants::CONFIG_TIME_BATHE);
-        }
-        if (strtotime($pet['last_online']) + Constants::CONFIG_TIME_ONLINE <= $gameTime) {
+
+        // Bonus food
+        if ((date("G", $gameTime) >= 0) &&
+            (strtotime($pet['last_online']) <= strtotime(date("Y-m-d 00:00:00", $gameTime)))
+        ) {
+            $data['food'] = $pet['food'] + 5;
             $data['last_online'] = $this->getUtilityService()->getGameTime();
-        }
-        if (isset($data['full']) && $data['full'] == 0) {
-            $data['sick'] = 1;
         }
 
         // Evolve
-        if ((date("G", $gameTime) >= 6) &&
-            (strtotime($pet['last_online']) <= strtotime(date("Y-m-d 06:i:s", $gameTime))) &&
-            (strtotime($pet['created']) <= strtotime(date("Y-m-d 00:00:00", $gameTime)))
+        if ((date("G", $gameTime) >= Constants::CONFIG_TIME_SLEEP_END) &&
+            (strtotime($pet['last_evolve']) < strtotime(date("Y-m-d 00:00:00", $gameTime)))
         ) {
             // TODO If not for hackathon, ideally to check if the certain pet type has further evolution
-            if ($pet['type_id'] == 1) {
-                $data['type_id'] = 2;
+            if ($pet['type_id'] == Constants::CONFIG_PET_TYPE_EGG) {
+                $data['type_id'] = Constants::CONFIG_PET_TYPE_BIRD;
+            }
+        }
+
+        // Log for last online
+        if (strtotime($pet['last_online']) + Constants::CONFIG_TIME_ONLINE <= $gameTime) {
+            $data['last_online'] = $this->getUtilityService()->getGameTime();
+            if ($pet['type_id'] == Constants::CONFIG_PET_TYPE_EGG) {
+                $data['last_feed'] = $data['last_bathe'] = $this->getUtilityService()->getGameTime();
             }
         }
 

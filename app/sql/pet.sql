@@ -18,6 +18,7 @@ CREATE TABLE `pet` (
   `last_feed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_bathe` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_online` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_evolve` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -30,5 +31,5 @@ CREATE TABLE `cheat` (
 
 INSERT INTO `type` VALUES (1, "Egg", "Isn't it obvious enough that I'm an egg?");
 INSERT INTO `type` VALUES (2, "Bird", "What did you expect? Did you think an egg will evolve into a plant?");
-INSERT INTO `pet` VALUES (1, 1, 0, 3, 2, 10, 1, NOW(), NOW(), NOW(), NOW(), NOW());
-INSERT INTO `pet` VALUES (2, 2, 0, 0, 5, 3, 2, NOW(), NOW(), NOW(), NOW(), NOW());
+INSERT INTO `pet` VALUES (1, 1, 0, 3, 2, 10, 1, NOW(), NOW(), NOW(), NOW(), NOW(), NOW());
+INSERT INTO `pet` VALUES (2, 2, 0, 0, 5, 3, 2, NOW(), NOW(), NOW(), NOW(), NOW(), NOW());

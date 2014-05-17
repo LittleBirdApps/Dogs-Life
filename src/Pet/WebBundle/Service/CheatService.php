@@ -47,9 +47,9 @@ class CheatService extends BaseService
      */
     public function resetTime()
     {
-        $gameTime = $this->getUtilityService()->getGameTime();
         $this->getDB()->executeQuery('TRUNCATE cheat');
-        $this->getDB()->update('pet', ['last_feed' => $gameTime, 'last_bathe' => $gameTime, 'last_online' => $gameTime], ['1' => '1']);
+        $gameTime = $this->getUtilityService()->getGameTime();
+        $this->getDB()->update('pet', ['last_feed' => $gameTime, 'last_bathe' => $gameTime, 'last_online' => $gameTime, 'last_evolve' => $gameTime, 'created' => $gameTime, 'updated' => $gameTime], ['1' => '1']);
     }
 
     /**

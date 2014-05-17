@@ -64,7 +64,9 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="pet" class="{{ pet.name|lower }}" data-container="body" data-toggle="popover" data-placement="top" data-title="{{ pet.name }}" data-content="{{ status.message }}"></div>
+                <div id="pet" class="{{ pet.name|lower }} {{ status.condition }}" data-container="body" data-toggle="popover" data-placement="top" data-title="{{ pet.name }}" data-content="{{ status.message }}">
+                    <img />
+                </div>
             </div>
         </div>
     </div>
