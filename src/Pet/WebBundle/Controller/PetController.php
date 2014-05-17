@@ -39,11 +39,7 @@ class PetController extends BaseController
             $status['message'] = "I can have some food :|";
         } else if ($pet['clean'] <= 3) {
             $status['message'] = "It's good to clean ourselves up :|";
-        } else if ($pet['full'] == Constants::CONFIG_MAX_FULL) {
-            $status['message'] = "Thank you for feeding me well :)";
-        } else if ($pet['clean'] == Constants::CONFIG_MAX_CLEAN) {
-            $status['message'] = "Thank you for cleaning me well :)";
-        } else { // full & clean = 4
+        } else {
             $status['message'] = "Life is beautiful!";
         }
 

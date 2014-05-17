@@ -4,6 +4,10 @@ html, body {
 body {
     padding-top: 50px;
 }
+h3 {
+    margin-top: 0px;
+}
+
 .body {
     margin: auto;
     width: 320px;

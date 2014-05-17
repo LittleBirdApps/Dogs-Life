@@ -145,6 +145,17 @@ class PetService extends BaseService
             $data['sick'] = 1;
         }
 
+        // Evolve
+        if ((date("G", $gameTime) >= 6) &&
+            (strtotime($pet['last_online']) <= strtotime(date("Y-m-d 06:i:s", $gameTime))) &&
+            (strtotime($pet['created']) <= strtotime(date("Y-m-d 00:00:00", $gameTime)))
+        ) {
+            // TODO If not for hackathon, ideally to check if the certain pet type has further evolution
+            if ($pet['type_id'] == 1) {
+                $data['type_id'] = 2;
+            }
+        }
+
         if (!empty($data)) {
             $this->savePet($petId, $data);
         }
